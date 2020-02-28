@@ -1,13 +1,13 @@
 {
   "name": "rectangle",
   "version": "1.0.0",
-  "description": "",
+  "description": "计算矩形的面积和周长",
   "main": "rectangle.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 0 && grunt lint && grunt unitTest"
   },
   "keywords": [],
-  "author": "",
+  "author": "LJHAAAAA",
   "license": "ISC",
   "devDependencies": {
     "grunt": "^1.0.4",
