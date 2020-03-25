@@ -1,32 +1,60 @@
-//所有jQ语法都是在页面完成加载之后完成的
-//还有舍入误差问题
-//Math.round() 函数返回一个数字四舍五入后最接近的整数。
-//pow() 方法可返回 x 的 y 次幂的值,可以用于保留多少位小数的计算中
+/* global Rectangle, validate, isLegalKey, $forkMeGH, $bszPageFooter: true */
+$(function() {
+  var $width = $('#width'),
+      $height = $('#height'),
+      $btnCal = $('#calculate'),
+      $perimeter = $('#perimeter'),
+      $area = $('#area'),
+      $widthValidate = $('#width-validate'),
+      $heightValidate = $('#height-validate'),
+      isPassValidate = false;
 
-$(
-    function(){
-        //get dom elem
-        var $width = $('#width'),
-            $height = $('#height'),
-            $btnCal = $('#calculate'),
-            $perimeter = $('#perimeter'),
-            $area = $('#area');
-        /*calc button click event*/
-        $btnCal.click(function(){
-            //get value
-            var w = Number($width.val()),
-                h = Number($height.val());
-            
-            // calculate
-            function perFractional(x,y,n){
-                return Math.round((x+y)*2*Math.pow(10,n))/Math.pow(10,n);
-            }
-            function areaFractional(x,y,n){
-                return Math.round(x*y*Math.pow(10,n))/Math.pow(10,n);
-            }    
-            //output
-            $perimeter.val(perFractional(w,h,2));
-            $area.val(areaFractional(w,h,2));
-        })    
+  $forkMeGH.show('https://github.com/fengfeike/rectangle');
+  $bszPageFooter.show('body');
+
+  $width.focusout(function() {
+    var result = validate($width.val());
+    isPassValidate = result.isOK;
+    if(!result.isOK) {
+      $widthValidate.html('宽度' + result.reason);
+      $width.select();
+    } else {
+      $widthValidate.html('');
     }
-);
+  });
+
+  $width.keypress(function(e) {
+    if(!isLegalKey(e.key, e.target.value, e.target.selectionStart)) {
+      e.preventDefault();
+    }
+  });
+
+  $height.focusout(function() {
+    var result = validate($height.val());
+    isPassValidate = result.isOK;
+    if(!result.isOK) {
+      $heightValidate.html('高度' + result.reason);
+      $height.select();
+    } else {
+      $heightValidate.html('');
+    }
+  });
+
+  $height.keypress(function(e) {
+    if(!isLegalKey(e.key, e.target.value, e.target.selectionStart)) {
+      e.preventDefault();
+    }
+  });
+
+  $btnCal.click(function(){
+    if(!isPassValidate) return;
+
+    var w = $width.val(),
+        h = $height.val();
+
+    var r = new Rectangle(w, h);
+
+    $perimeter.val(r.perimeter());
+    $area.val(r.area());
+  });
+});
