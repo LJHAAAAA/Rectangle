@@ -9,7 +9,7 @@ $(function() {
       $heightValidate = $('#height-validate'),
       isPassValidate = false;
 
-  $forkMeGH.show('https://github.com/LJHAAAAA/Rectangle');
+//   $forkMeGH.show('https://github.com/LJHAAAAA/Rectangle');
   $bszPageFooter.show('body');
 
   $width.focusout(function() {
